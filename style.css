@@ -1,0 +1,56 @@
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(to right, #e0f7fa, #fce4ec);
+    min-height: 100vh;
+}
+
+h1 {
+    font-weight: bold;
+    color: #2c3e50;
+    text-shadow: 2px 2px #ffffff;
+}
+
+.card {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+    border-radius: 1rem;
+    transition: transform 0.2s ease-in-out;
+}
+
+.card:hover {
+    transform: scale(1.02);
+}
+
+.form-group label {
+    font-weight: 600;
+}
+
+#previewImage {
+    width: 100%;
+    height: auto;
+    margin-top: 10px;
+    border-radius: 12px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.emoji-option {
+    font-size: 1.5rem;
+    padding: 3px;
+}
+
+.emoji-badge {
+    font-size: 2rem;
+    display: inline-block;
+    margin-bottom: 5px;
+}
+
+.travel-card-img {
+    max-height: 200px;
+    object-fit: cover;
+    border-radius: 0.75rem;
+}
+
+.btn-delete {
+    background-color: #ff4d4d;
+    border: none;
+    color: white;
+}
