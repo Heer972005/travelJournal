@@ -1,60 +1,59 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-    <title>🌍 Travel Journal</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="G:\vs\project_travelJournal\style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Travel Journal</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
 </head>
+
 <body class="bg-light">
+
     <div class="container py-5">
         <h1 class="text-center mb-4">🌍 My Travel Journal</h1>
 
-        <div class="card mb-5">
-            <div class="card-body">
-                <form id="entryForm">
-                    <div class="form-group">
-                        <label for="city">City or Place</label>
-                        <input type="text" id="city" class="form-control" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="desription">📝 Your Memory</label>
-                        <textarea id="description" class="form-control" rows="3" placeholder="What made this place special?" required></textarea>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="emoji">💖 Your Reaction</label>
-                        <select id="emoji" class="form-control emoji-option">
-                            <option>😊 Happy</option>
-                            <option>😍 Loved it</option>
-                            <option>😮 Surprised</option>
-                            <option>😂 Fun</option>
-                            <option>🤩 Dreamy</option>
-                        </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="image">🖼️ Upload a Photo</label>
-                            <input type="file" id="image" accept="image/*" class="form-control-file">
-                            <img id="previewImage" style="display:none;" />
-                        </div>
-                        <buttonl type="submit" class="btn btn-primary btn-block rounded-pill"> 📌Save entry</button>
-                </form>
-            </div>
+        <!-- Form to Add Travel Entry -->
+        <div class="card p-4 mb-5">
+            <h4>Add a New Journey</h4>
+            <form id="journalForm">
+                <div class="form-group">
+                    <label for="location">Location</label>
+                    <input type="text" class="form-control" id="location" required>
+                </div>
+                <div class="form-group">
+                    <label for="travelDate">Date</label>
+                    <input type="date" class="form-control" id="travelDate" required>
+                </div>
+                <div class="form-group">
+                    <label for="memory">Your Memory</label>
+                    <textarea class="form-control" id="memory" rows="3" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="photo">Photo</label>
+                    <input type="file" class="form-control-file" id="photo" accept="image/*">
+                </div>
+                <div class="form-group">
+                    <label for="mode">Mode of Travel</label>
+                    <select class="form-control" id="mode">
+                        <option>✈️ Plane</option>
+                        <option>🚗 Car</option>
+                        <option>🚆 Train</option>
+                        <option>⛵ Yacht</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Add Entry</button>
+            </form>
         </div>
-        <div id="journalEntries" class="row"></div>
+
+        <!-- Display Entries -->
+        <div id="entries" class="row">
+            <!-- JS will inject travel cards here -->
         </div>
     </div>
-    <script src="G:\vs\project_travelJournal\script.js"></script>
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
-    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
-        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
-        crossorigin="anonymous"></script>
-    
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
-        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
-        crossorigin="anonymous"></script>
+
+    <script src="script.js"></script>
 </body>
+
 </html>

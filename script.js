@@ -1,129 +1,57 @@
-const form = document.getElementById("entryForm");
-const cityInput = document.getElementById("city");
-const descriptionInput = document.getElementById("description");
-const emojiInput = document.getElementById("emoji");
-const imageInput = document.getElementById("image");
-const previewImage = document.getElementById("previewImage");
-const entriesContainer = document.getElementById("journalEntries");
+const form = document.getElementById('journalForm');
+const entriesDiv = document.getElementById('entries');
 
-// Load entries on page load
-window.addEventListener("DOMContentLoaded", displayEntries);
+// Load saved entries
+let entries = JSON.parse(localStorage.getItem('travelEntries')) || [];
+displayEntries();
 
-// Show preview when image is selected
-imageInput.addEventListener("change", () => {
-    const file = imageInput.files[0];
-    if (file) {
-        const reader = new FileReader();
-        reader.onload = function (e) {
-            previewImage.src = e.target.result;
-            previewImage.style.display = "block";
-        };
-        reader.readAsDataURL(file);
-    }
-});
-
-// Handle form submission
-form.addEventListener("submit", function (e) {
+form.addEventListener('submit', function (e) {
     e.preventDefault();
 
-    const city = cityInput.value.trim();
-    const description = descriptionInput.value.trim();
-    const emoji = emojiInput.value.trim();
-    const imageFile = imageInput.files[0];
+    const location = document.getElementById('location').value;
+    const travelDate = document.getElementById('travelDate').value;
+    const memory = document.getElementById('memory').value;
+    const mode = document.getElementById('mode').value;
+    const photoInput = document.getElementById('photo');
+    const photo = photoInput.files[0];
 
-    if (!city || !description || !emoji) return;
+    const reader = new FileReader();
+    reader.onload = function () {
+        const imageURL = reader.result;
+        const newEntry = { location, travelDate, memory, mode, imageURL };
 
-    if (imageFile) {
-        const reader = new FileReader();
-        reader.onload = function (e) {
-            const imageData = e.target.result;
-            saveEntry(city, description, emoji, imageData);
-        };
-        reader.readAsDataURL(imageFile);
-    } else {
-        saveEntry(city, description, emoji, null);
-    }
-
-    // Reset form
-    form.reset();
-    previewImage.style.display = "none";
-});
-
-// Save entry to localStorage
-function saveEntry(city, description, emoji, image) {
-    const entry = {
-        id: Date.now(),
-        city,
-        description,
-        emoji,
-        image,
+        entries.push(newEntry);
+        localStorage.setItem('travelEntries', JSON.stringify(entries));
+        displayEntries();
+        form.reset();
     };
 
-    const entries = getEntries();
-    entries.push(entry);
-    localStorage.setItem("travelJournal", JSON.stringify(entries));
-    displayEntries();
-}
+    if (photo) {
+        reader.readAsDataURL(photo);
+    } else {
+        const newEntry = { location, travelDate, memory, mode, imageURL: '' };
+        entries.push(newEntry);
+        localStorage.setItem('travelEntries', JSON.stringify(entries));
+        displayEntries();
+        form.reset();
+    }
+});
 
-// Get entries from localStorage
-function getEntries() {
-    return JSON.parse(localStorage.getItem("travelJournal")) || [];
-}
-
-// Display entries
 function displayEntries() {
-    const entries = getEntries();
-    entriesContainer.innerHTML = "";
-
-    entries.reverse().forEach((entry) => {
-        const col = document.createElement("div");
-        col.className = "col-md-6 col-lg-4 mb-4";
-
-        const card = document.createElement("div");
-        card.className = "card h-100";
-
-        if (entry.image) {
-            const img = document.createElement("img");
-            img.src = entry.image;
-            img.alt = "Uploaded photo";
-            img.className = "card-img-top travel-card-img";
-            card.appendChild(img);
-        }
-
-        const cardBody = document.createElement("div");
-        cardBody.className = "card-body";
-
-        const emoji = document.createElement("div");
-        emoji.className = "emoji-badge text-center";
-        emoji.textContent = entry.emoji;
-        cardBody.appendChild(emoji);
-
-        const title = document.createElement("h5");
-        title.className = "card-title";
-        title.textContent = entry.city;
-        cardBody.appendChild(title);
-
-        const desc = document.createElement("p");
-        desc.className = "card-text";
-        desc.textContent = entry.description;
-        cardBody.appendChild(desc);
-
-        const delBtn = document.createElement("button");
-        delBtn.className = "btn btn-delete btn-sm rounded-pill";
-        delBtn.textContent = "🗑️ Delete Entry";
-        delBtn.onclick = () => deleteEntry(entry.id);
-        cardBody.appendChild(delBtn);
-
-        card.appendChild(cardBody);
-        col.appendChild(card);
-        entriesContainer.appendChild(col);
+    entriesDiv.innerHTML = '';
+    entries.forEach((entry, index) => {
+        const col = document.createElement('div');
+        col.className = 'col-md-6 mb-4';
+        col.innerHTML = `
+      <div class="card shadow-sm">
+        ${entry.imageURL ? `<img src="${entry.imageURL}" class="card-img-top" alt="Travel photo">` : ''}
+        <div class="card-body">
+          <h5 class="card-title">${entry.location} ${entry.mode}</h5>
+          <h6 class="card-subtitle mb-2 text-muted">${entry.travelDate}</h6>
+          <p class="card-text">${entry.memory}</p>
+        </div>
+      </div>
+    `;
+        entriesDiv.appendChild(col);
     });
-}
-
-// Delete entry
-function deleteEntry(id) {
-    let entries = getEntries();
-    entries = entries.filter((entry) => entry.id !== id);
-    localStorage.setItem("travelJournal", JSON.stringify(entries));
-    displayEntries();
 }
