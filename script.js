@@ -55,3 +55,17 @@ function displayEntries() {
         entriesDiv.appendChild(col);
     });
 }
+
+const themeToggle = document.getElementById('themeToggle');
+let currentTheme = localStorage.getItem('theme') || 'light';
+applyTheme(currentTheme);
+
+themeToggle.addEventListener('click', () => {
+    currentTheme = (currentTheme === 'light') ? 'dark' : 'light';
+    applyTheme(currentTheme);
+    localStorage.setItem('theme', currentTheme);
+});
+function applyTheme(theme) {
+    document.body.classList.toggle('dark-mode', theme === 'dark');
+    themeToggle.textContent = theme === 'dark' ? 'Switch to light  ☀️' : 'Switch to dark 🌙';
+}

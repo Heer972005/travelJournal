@@ -8,23 +8,73 @@ body {
     border-radius: 10px;
 }
 
-body.dark-mode{
-    background-color: #1f1f1f;
-    color:#f0f0f0
+/* Smooth theme transition */
+body {
+    transition: background-color 0.8s ease, color 0.8s ease, background-image 1s ease;
 }
 
-.dark-mode .card{
-    background-color: #2c2c2c;
-    border-color:#444;
+/* ☁️ Light Mode: Soft cloud background */
+
+body {
+    background: url('https://media.istockphoto.com/id/1388347418/photo/raster-illustration-of-clouds-on-a-transparent-background-realistic-rain-clouds.webp?a=1&b=1&s=612x612&w=0&k=20&c=1BVbeMhyHTKiFNjwuqbC-BF4aoWhNdbNWxHtYdkJHK0=')repeat-x;
+    background-size: cover;
+    animation: moveClouds 60s linear infinite;
+    transition: background-color 0.8s ease, color 0.8s ease, background-image 1s ease;
 }
 
-.dark-mode .card-text,
-.dark-mode .card-title,
-.dark-mode .card-subtitle{
-    color:#e0e0e0;
+/* 🌌 Dark Mode: Animated star field */
+body.dark-mode {
+    background: radial-gradient(#1b2735, #090a0f);
+    color: #f0f0f0;
+    position: relative;
+    overflow-x: hidden;
+}
+.card{
+    color:rgb(0,0,0);
 }
 
-.dark-mode .btn{
-    border-color:#ccc;
-    color:#f0f0f0;
+body.dark-mode::before {
+    content: '';
+    position: fixed;
+    width: 200%;
+    height: 200%;
+    top: 0;
+    left: 0;
+    background: url('https://media.istockphoto.com/id/1437539021/photo/northern-lights-above-volcanic-crater.webp?a=1&b=1&s=612x612&w=0&k=20&c=7SJCRGnR9fqg6KnJpeUHX9cwxghpwVJrQmG4GtYCwu4=') repeat;
+    animation: stars 100s linear infinite;
+    opacity: 0.3;
+    z-index: -1;
+}
+
+/* 🌐 Subtle world map overlay */
+body.dark-mode::after {
+    content: '';
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: url('https://plus.unsplash.com/premium_photo-1712509212206-ab4e7b3bb593?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8d29ybGQlMjBtYXAlMjB0cmFuc2NsdWNlbnR8ZW58MHx8MHx8fDA%3D') center center no-repeat;
+    background-size: cover;
+    opacity: 0.05;
+    z-index: -2;
+}
+
+/* Stars Animation */
+@keyframes stars {
+    0% {
+        background-position: 0 0;
+    }
+
+    100% {
+        background-position: 10000px 10000px;
+    }
+}
+
+@keyframes moveClouds {
+    0% {
+        background-position: 0 0;
+    }
+
+    100% {
+        background-position: 10000px 0;
+    }
 }
